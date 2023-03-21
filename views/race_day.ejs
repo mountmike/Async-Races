@@ -1,0 +1,19 @@
+<h3>Current account balance: </h3>
+<p class="bank-balance"></p>
+<h2 class="instructions"></h2>
+<div class="main-wrapper">
+    <h2>You chose: <%= userSelection %> </h2>
+    <div>
+        <% if (userSelection === result[0]) { %>
+            <p>YOU WON!</p>
+        <% } else { %>
+            <p>You lost.</p>
+        <% } %>
+    </div>
+    <ol>
+        <% for (horse of result) { %>
+                <li><%= horse %> </li>
+        <% } %>
+    </ul>
+</div>
+<a href="/">Play again?</a>

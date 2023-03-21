@@ -1,0 +1,36 @@
+{
+  "name": "async-races",
+  "version": "1.0.0",
+  "description": "",
+  "main": "async_bets.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mountmike/Async-Races.git"
+  },
+  "keywords": [],
+  "author": "mountmike",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mountmike/Async-Races/issues"
+  },
+  "homepage": "https://github.com/mountmike/Async-Races#readme",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "fs": "^0.0.1-security",
+    "layouts": "^3.0.2",
+    "memorystore": "^1.6.7",
+    "omdb-api-search": "^1.0.1",
+    "readline-sync": "^1.4.10",
+    "underscore": "^1.13.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
