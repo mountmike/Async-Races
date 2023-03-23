@@ -200,6 +200,12 @@ function startRace(event) {
     updateBalance()
     depopulateParent(globalDOM.mainContainer)
     releaseHorses()
+    buildRaceAnimation()
+    setTimeout(() => {
+        let field = document.querySelector(".field")
+        field.style.visibility = "hidden"
+        populateResults(raceResults)
+    }, 4500)
 }
 
 function releaseHorses() {
@@ -214,8 +220,23 @@ function releaseHorses() {
     Promise.all(promises)
         .then(res => {
             raceResults = res
-            populateResults(raceResults)
         })
+}
+
+function buildRaceAnimation() {
+    let div = document.createElement("div")
+    div.className = "field"
+    globalDOM.mainContainer.appendChild(div)
+    let horseDivs = []
+    for (i = 1; i < 9; i++) {
+        let horse = document.createElement("div")
+        div.id = `horse${i}`
+        let img = document.createElement("img")
+        img.src = "https://media.tenor.com/mc5h0vgHJvEAAAAi/horse-cowboy.gif"
+        horse.appendChild(img)
+        horseDivs.push(horse)
+    }
+    horseDivs.forEach(horse => div.appendChild(horse))
 }
 
 function buildPage() {

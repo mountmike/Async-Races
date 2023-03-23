@@ -7,7 +7,6 @@ body {
     background: greenyellow;
     display: flex;
     flex-direction: column;
-    min-height: 100dvh;
     justify-content: center;
     align-items: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -27,6 +26,17 @@ main {
     padding: 5%;
 }
 
+.field {
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: greenyellow;
+    z-index: 1;
+}
+
 .div-container {
     display: flex;
     flex-direction: column;
@@ -40,4 +50,25 @@ form, ol {
 #errorMSG {
     height: 1em; 
     color: red;
+}
+
+div div {
+    width: 100;
+    height: 75px;
+    position: relative;
+    animation: horsemove 7s 1;
+}
+
+#horse1 {animation-timing-function: linear;}
+#horse2 {animation-timing-function: ease;}
+#horse3 {animation-timing-function: ease-in;}
+#horse4 {animation-timing-function: ease-out;}
+#horse5 {animation-timing-function: linear;}
+#horse6 {animation-timing-function: ease;}
+#horse7 {animation-timing-function: ease-in;}
+#horse8 {animation-timing-function: ease-out;}
+
+@keyframes horsemove {
+    from {left: 0px;}
+    to {left: 110vw;}
 }
