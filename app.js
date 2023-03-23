@@ -1,5 +1,9 @@
-const mainContainer = document.querySelector("main");
-const balanceOutput = document.querySelector("#balanceOutput")
+const globalDOM = {
+    mainContainer: document.querySelector("main"),
+    headerContainer: document.querySelector("header"),
+    submitBtn: document.createElement("button"),
+    balanceOutput: document.createElement("h3")
+}
 const allHorses = [
     'The Shawshank Redemption',
     'The Godfather',
@@ -72,7 +76,7 @@ function populateContestants(array) {
     heading2.textContent = "Horses"
     let heading3 = document.createElement("th")
     heading3.textContent = "Odds"
-    mainContainer.appendChild(form)
+    globalDOM.mainContainer.appendChild(form)
     form.appendChild(table)
     table.appendChild(tr)
     tr.appendChild(heading1)
@@ -106,27 +110,30 @@ function populateContestants(array) {
 function buildBetSelector() {
     let div = document.createElement("div")
     div.className = "div-container"
-    mainContainer.appendChild(div)
+    globalDOM.mainContainer.appendChild(div)
     let label = document.createElement("label")
     label.textContent = "How much do you wanna bet?"
+    let errorMSG = document.createElement("p")
+    errorMSG.id = "errorMSG"
     let input = document.createElement("input")
     input.type = "number"
     input.id = "betInput"
     input.min = 1
     input.max = currentBalance
     input.value = 1
-    let submitBtn = document.createElement("button")
-    submitBtn.textContent = "Start Race"
-    submitBtn.id = "startRaceBtn"
-    submitBtn.addEventListener("click", startRace)
+    globalDOM.submitBtn.textContent = "Start Race"
+    globalDOM.submitBtn.id = "startRaceBtn"
+    globalDOM.submitBtn.disabled = true
+    globalDOM.submitBtn.addEventListener("click", startRace)
     div.appendChild(label)
     div.appendChild(input)
-    div.appendChild(submitBtn)
+    div.appendChild(globalDOM.submitBtn)
+    div.appendChild(errorMSG)
 }
 
 function populateResults(array) {
     let orderedList = document.createElement("ol")
-    mainContainer.appendChild(orderedList)
+    globalDOM.mainContainer.appendChild(orderedList)
     for (index of array) {
         let li = document.createElement("li")
         li.textContent = index
@@ -134,10 +141,10 @@ function populateResults(array) {
     }
     let div = document.createElement("div")
     div.className = "div-container"
-    mainContainer.appendChild(div)
+    globalDOM.mainContainer.appendChild(div)
     let p = document.createElement("p")
     if (raceResults[0] === currentHorseSelection) {
-        let winnings = Math.round((currentBet * currentRace.filter(horse => horse.name === currentHorseSelection)[0].odds) * 100) / 100
+        let winnings = currentBet * currentRace.filter(horse => horse.name === currentHorseSelection)[0].odds
         currentBalance = currentBalance + winnings;
         updateBalance()
         p.textContent = `You won! ${currentHorseSelection} came first and you won $${winnings}! Congradulations!`
@@ -160,7 +167,11 @@ function depopulateParent(container) {
 }
 
 function updateBalance() {
-    balanceOutput.textContent = `$${currentBalance}`
+    currentBalance = Math.round(currentBalance * 100) / 100
+    if (currentBalance < 10) {
+        globalDOM.balanceOutput.style.color = "red"
+    }
+    globalDOM.balanceOutput.textContent = `Account Balance: $${currentBalance}`
 }
 
 function getRandomHorses() {
@@ -174,29 +185,20 @@ function getRandomHorses() {
     return result
 }
 
-function buildPage() {
-    depopulateParent(mainContainer)
-    currentRace = getRandomHorses(allHorses)
-    populateContestants(currentRace)
-    buildBetSelector()
-    updateBalance()
-}
-
-buildPage()
-
-const selectHorseInputs = document.querySelectorAll("input")
-const startRaceBtn = document.querySelector("#startRaceBtn")
-const betInput = document.querySelector("#betInput")
-
 function handleSelection(event) {
+    globalDOM.submitBtn.disabled = false
     currentHorseSelection = event.target.value
 }
 
 function startRace(event) {
     currentBet = Number(betInput.value)
+    if (currentBet < 1 || currentBet > currentBalance) {
+        document.querySelector("#errorMSG").textContent = `Invalid input! Please enter a number between 0 and ${currentBalance}.`
+        return
+    }
     currentBalance = currentBalance - currentBet
     updateBalance()
-    depopulateParent(mainContainer)
+    depopulateParent(globalDOM.mainContainer)
     releaseHorses()
 }
 
@@ -215,3 +217,14 @@ function releaseHorses() {
             populateResults(raceResults)
         })
 }
+
+function buildPage() {
+    depopulateParent(globalDOM.mainContainer)
+    currentRace = getRandomHorses(allHorses)
+    populateContestants(currentRace)
+    buildBetSelector()
+    updateBalance()
+    globalDOM.headerContainer.appendChild(globalDOM.balanceOutput)
+}
+
+buildPage()

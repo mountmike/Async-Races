@@ -37,6 +37,7 @@ form, ol {
     flex: 2;
 }
 
-.inline {
-    display: inline;
+#errorMSG {
+    height: 1em; 
+    color: red;
 }
