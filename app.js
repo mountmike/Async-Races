@@ -54,8 +54,8 @@ const allHorses = [
     'Braveheart',
     'Das Boot'
 ]
-const defaultBalance = 100;
-let currentBalance = defaultBalance
+
+let currentBalance = 100;
 let currentRace = [];
 let raceResults = [];
 let currentHorseSelection;
@@ -95,6 +95,7 @@ function populateContestants(array) {
         input.type = "radio"
         input.name = "currentBet"
         input.value = index.name
+        input.addEventListener("click", handleSelection)
         span.textContent = index.odds
         col1.appendChild(input)
         col2.appendChild(label)
@@ -117,7 +118,7 @@ function buildBetSelector() {
     let submitBtn = document.createElement("button")
     submitBtn.textContent = "Start Race"
     submitBtn.id = "startRaceBtn"
-    submitBtn.disabled = true
+    submitBtn.addEventListener("click", startRace)
     div.appendChild(label)
     div.appendChild(input)
     div.appendChild(submitBtn)
@@ -131,6 +132,25 @@ function populateResults(array) {
         li.textContent = index
         orderedList.appendChild(li)
     }
+    let div = document.createElement("div")
+    div.className = "div-container"
+    mainContainer.appendChild(div)
+    let p = document.createElement("p")
+    if (raceResults[0] === currentHorseSelection) {
+        let winnings = Math.round((currentBet * currentRace.filter(horse => horse.name === currentHorseSelection)[0].odds) * 100) / 100
+        currentBalance = currentBalance + winnings;
+        updateBalance()
+        p.textContent = `You won! ${currentHorseSelection} came first and you won $${winnings}! Congradulations!`
+        div.appendChild(p)
+    } else {
+        p.textContent = `I'm sorry, you lost. ${currentHorseSelection} came in at position number ${raceResults.indexOf(currentHorseSelection) + 1}`
+        div.appendChild(p)
+    }
+    let playAgainBtn = document.createElement("button")
+    playAgainBtn.id = "playAgainBtn"
+    playAgainBtn.textContent = "Another Race?"
+    playAgainBtn.addEventListener("click", buildPage)
+    div.appendChild(playAgainBtn)
 }
 
 function depopulateParent(container) {
@@ -165,18 +185,15 @@ function buildPage() {
 buildPage()
 
 const selectHorseInputs = document.querySelectorAll("input")
-selectHorseInputs.forEach(input => input.addEventListener("click", handleSelection))
 const startRaceBtn = document.querySelector("#startRaceBtn")
-startRaceBtn.addEventListener("click", startRace)
 const betInput = document.querySelector("#betInput")
 
 function handleSelection(event) {
     currentHorseSelection = event.target.value
-    startRaceBtn.disabled = false
 }
 
 function startRace(event) {
-    currentBet = betInput.value
+    currentBet = Number(betInput.value)
     currentBalance = currentBalance - currentBet
     updateBalance()
     depopulateParent(mainContainer)

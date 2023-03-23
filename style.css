@@ -19,17 +19,22 @@ header {
 
 main {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     background-color: white;
     min-width: 50%;
     min-height: 50%;
-    padding: 2%;
+    padding: 5%;
 }
 
 .div-container {
     display: flex;
     flex-direction: column;
+    flex: 1;
+}
+
+form, ol {
+    flex: 2;
 }
 
 .inline {
