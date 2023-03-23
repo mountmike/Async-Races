@@ -1,3 +1,7 @@
+/* * {
+    border: red 1px solid;
+} */
+
 body {
     margin: 0;
     background: greenyellow;
@@ -9,12 +13,25 @@ body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.main-wrapper {
-    background-color: white;
-    display: flex;
-    gap: 5%;
+header {
+    margin: 1%;
 }
 
-#bold {
-    font-weight: bold;
+main {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    min-width: 50%;
+    min-height: 50%;
+    padding: 2%;
+}
+
+.div-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.inline {
+    display: inline;
 }
