@@ -4,4 +4,4 @@ A horse race betting game that determines a winner by the first asyncronous requ
 
 [Try here](https://mountmike.github.io/Async-Races) 
 
-![Screenshot](https://github.com/mountmike/Async-Races/images/screenshot1.png)
+![Screenshot](https://github.com/mountmike/Async-Races/blob/main/images/screenshot1.png)
