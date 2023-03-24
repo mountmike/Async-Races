@@ -100,7 +100,7 @@ function populateContestants(array) {
         input.name = "currentBet"
         input.value = index.name
         input.addEventListener("click", handleSelection)
-        span.textContent = index.odds
+        span.textContent = `$${index.odds}`
         col1.appendChild(input)
         col2.appendChild(label)
         col3.appendChild(span)
@@ -132,11 +132,13 @@ function buildBetSelector() {
 }
 
 function populateResults(array) {
+    globalDOM.mainContainer.style.backgroundColor = "white"
     let orderedList = document.createElement("ol")
     globalDOM.mainContainer.appendChild(orderedList)
     for (index of array) {
         let li = document.createElement("li")
         li.textContent = index
+        li.id = index
         orderedList.appendChild(li)
     }
     let div = document.createElement("div")
@@ -144,12 +146,14 @@ function populateResults(array) {
     globalDOM.mainContainer.appendChild(div)
     let p = document.createElement("p")
     if (raceResults[0] === currentHorseSelection) {
-        let winnings = currentBet * currentRace.filter(horse => horse.name === currentHorseSelection)[0].odds
+        let winnings = Math.round(currentBet * currentRace.filter(horse => horse.name === currentHorseSelection)[0].odds * 100) / 100
         currentBalance = currentBalance + winnings;
         updateBalance()
         p.textContent = `You won! ${currentHorseSelection} came first and you won $${winnings}! Congradulations!`
         div.appendChild(p)
+        orderedList.firstChild.style.fontWeight = "bold"
     } else {
+        document.querySelector(`#${currentHorseSelection}`).style.fontWeight = "bold"
         p.textContent = `I'm sorry, you lost. ${currentHorseSelection} came in at position number ${raceResults.indexOf(currentHorseSelection) + 1}`
         div.appendChild(p)
     }
@@ -170,6 +174,8 @@ function updateBalance() {
     currentBalance = Math.round(currentBalance * 100) / 100
     if (currentBalance < 10) {
         globalDOM.balanceOutput.style.color = "red"
+    } else {
+        globalDOM.balanceOutput.style.color = "inherit"
     }
     globalDOM.balanceOutput.textContent = `Account Balance: $${currentBalance}`
 }
@@ -178,7 +184,7 @@ function getRandomHorses() {
     let result = []
     for (i = 0; i < 8; i++) {
         let randomIndex = Math.floor(Math.random() * allHorses.length)
-        let odds = Math.random() * ((i+1.4) - 1) + 1
+        let odds = Math.random() * ((i+2) - 1) + 1
         let obj = { name: allHorses[randomIndex], odds: Math.round((odds + Number.EPSILON) * 100) / 100}
         result.push(obj)
     }
@@ -237,6 +243,7 @@ function buildRaceAnimation() {
         horseDivs.push(horse)
     }
     horseDivs.forEach(horse => div.appendChild(horse))
+    globalDOM.mainContainer.style.backgroundColor = "inherit"
 }
 
 function buildPage() {
@@ -249,3 +256,5 @@ function buildPage() {
 }
 
 buildPage()
+
+
