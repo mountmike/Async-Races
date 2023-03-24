@@ -132,6 +132,7 @@ function buildBetSelector() {
 }
 
 function populateResults(array) {
+    globalDOM.headerContainer.style.visibility = "visible"
     globalDOM.mainContainer.style.backgroundColor = "white"
     let orderedList = document.createElement("ol")
     globalDOM.mainContainer.appendChild(orderedList)
@@ -243,6 +244,7 @@ function buildRaceAnimation() {
         horseDivs.push(horse)
     }
     horseDivs.forEach(horse => div.appendChild(horse))
+    globalDOM.headerContainer.style.visibility = "hidden"
     globalDOM.mainContainer.style.backgroundColor = "inherit"
 }
 
