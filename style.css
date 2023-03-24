@@ -1,9 +1,6 @@
-/* * {
-    border: red 1px solid;
-} */
-
 body {
     margin: 0;
+    min-height: 100vh;
     background-image: url("/images/grass.png");
     display: flex;
     flex-direction: column;
@@ -19,6 +16,7 @@ header {
     text-align: center;
     border-radius: 5%;
     padding: 0 5%;
+
 }
 
 main {
@@ -42,9 +40,8 @@ table {
     display: flex;
     align-items: flex-end;
     width: 100vw;
-    height: 100vh;
     overflow: hidden;
-    z-index: 1;
+    z-index: 2;
 }
 
 .div-container {
