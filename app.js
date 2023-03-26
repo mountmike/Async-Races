@@ -218,7 +218,7 @@ function startRace(event) {
 function releaseHorses() {
     let promises = []
     for (i = 0; i < currentRace.length; i++) {
-        promises[i] = fetch(`https://omdbapi.com/?apikey=2f6435d9&t=${currentRace[i].name}`)
+        promises[i] = fetch(`https://omdbapi.com/?apikey=e59c15d6&t=${currentRace[i].name}`)
         .then(res => res.json())
         .then(res => {
             return res.Title
