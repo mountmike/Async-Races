@@ -216,18 +216,14 @@ function startRace(event) {
 }
 
 function releaseHorses() {
-    let promises = []
-    for (i = 0; i < currentRace.length; i++) {
-        promises[i] = fetch(`https://omdbapi.com/?apikey=e59c15d6&t=${currentRace[i].name}`)
-        .then(res => res.json())
-        .then(res => {
-            return res.Title
-        }) 
+    raceResults = []
+    for (horse of currentRace) {
+        fetch(`https://omdbapi.com/?apikey=e59c15d6&t=${horse.name}`)
+            .then(res => res.json())
+            .then(res => {
+                raceResults.push(res.Title)
+            })
     }
-    Promise.all(promises)
-        .then(res => {
-            raceResults = res
-        })
 }
 
 function buildRaceAnimation() {
